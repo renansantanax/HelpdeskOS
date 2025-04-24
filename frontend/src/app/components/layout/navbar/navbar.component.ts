@@ -115,21 +115,12 @@ export class NavbarComponent {
         // 🟢 Pega o refreshToken do localStorage
         const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
         const refreshToken = usuario.refreshToken;
-  
-        // 🟡 Faz requisição para logout (revoga o token no backend)
-        this.authService.logoutComToken(refreshToken).subscribe({
-          next: () => {
-            localStorage.removeItem('usuario');
-            this.router.navigateByUrl('/login');
-          },
-          error: () => {
-            // mesmo que falhe, limpa o storage e redireciona
-            localStorage.removeItem('usuario');
-            this.router.navigateByUrl('/login');
-          }
-        });
+
+        // 🟡 Faz requisição para logout
+        this.authService.logout();
+        localStorage.removeItem('usuario');
+        this.router.navigateByUrl('/login');
       }
     });
   }
-  
 }

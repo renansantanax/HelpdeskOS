@@ -7,47 +7,25 @@ import { osservice } from '../configurations/environments';
 export class AuthService {
   constructor(private http: HttpClient, public router: Router) {}
 
-  get accessToken() {
-    return this.getUsuario()?.token;
+  get accessToken(): string | null {
+    return this.getUsuario()?.token ?? null;
   }
 
-  get refreshToken() {
-    return this.getUsuario()?.refreshToken;
-  }
-
-  getUsuario() {
+  getUsuario(): any {
     const data = localStorage.getItem('usuario');
     return data ? JSON.parse(data) : null;
   }
 
-  setUsuario(data: any) {
+  setUsuario(data: any): void {
     localStorage.setItem('usuario', JSON.stringify(data));
   }
 
-  clear() {
+  clear(): void {
     localStorage.removeItem('usuario');
   }
 
-  refreshTokenRequest() {
-    return this.http.post<any>(`${osservice}/auth/refresh`, {
-      refreshToken: this.refreshToken,
-    });
-  }
-
-  logout() {
-    return this.http
-      .post(`${osservice}/auth/logout`, {
-        refreshToken: this.refreshToken,
-      })
-      .subscribe(() => {
-        this.clear();
-        this.router.navigate(['/login']);
-      });
-  }
-
-  logoutComToken(refreshToken: string) {
-    return this.http.post(`${osservice}/auth/logout`, {
-      refreshToken: refreshToken,
-    });
+  logout(): void {
+    this.clear();
+    this.router.navigate(['/login']);
   }
 }

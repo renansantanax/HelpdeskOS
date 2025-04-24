@@ -1,5 +1,5 @@
 // Base URL
-export const osservice = 'http://localhost:8080';
+export const osservice = 'http://localhost:8083';
 
 // Endpoints
 export const endpoints = {

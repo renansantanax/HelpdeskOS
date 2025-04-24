@@ -4,7 +4,6 @@ WORKDIR /app
 # Copia o arquivo do projeto para o container
 COPY . .
 # Compila o projeto usando o Maven 
-RUN chmod +x ./mvnw
 RUN ./mvnw clean package -DskipTests
 # Etapa 2: Imagem final para execução
 FROM eclipse-temurin:21-jre
