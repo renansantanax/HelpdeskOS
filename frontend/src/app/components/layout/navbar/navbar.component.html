@@ -1,0 +1,75 @@
+<!-- Sidebar com animação de colapsar corrigida -->
+<div class="min-h-screen flex">
+  <!-- Sidebar -->
+  <div [ngClass]="collapsed ? 'w-20' : 'w-64'"
+       class="transition-all duration-300 ease-in-out bg-white h-screen border-r flex flex-col">
+
+    <!-- Botão de toggle -->
+    <div (click)="toggleSidebar()" class="flex items-center justify-between h-14 border-b px-4 cursor-pointer">
+      <div *ngIf="!collapsed">LOGO</div>
+      <button class="text-gray-500 focus:outline-none">
+        <svg *ngIf="!collapsed" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        <svg *ngIf="collapsed" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navegação -->
+    <div class="overflow-y-hidden flex-grow">
+      <ul class="flex flex-col py-4 space-y-1">
+        <li class="px-5" *ngIf="!collapsed"></li>
+
+        <li *ngFor="let item of menuItems">
+          <!-- Link com rota -->
+          <a *ngIf="!item.action"
+             [routerLink]="item.route"
+             [ngClass]="{
+               'justify-center': collapsed,
+               'pl-4': !collapsed
+             }"
+             class="relative flex items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6 transition-all duration-200">
+            <span class="inline-flex justify-center items-center">
+              <i [class]="item.icon" class="w-5 h-5"></i>
+            </span>
+            <span class="ml-2 text-sm tracking-wide truncate transition-all duration-300"
+                  [ngClass]="collapsed ? 'opacity-0 scale-95 w-0 overflow-hidden' : 'opacity-100 scale-100 w-auto'">
+              {{ item.label }}
+            </span>
+          </a>
+
+          <!-- Botão com ação -->
+          <button *ngIf="item.action"
+                  (click)="item.action()"
+                  class="w-full text-left relative flex items-center h-11 focus:outline-none hover:bg-gray-50 border-l-5 border-transparent hover:border-indigo-500 text-gray-600 hover:text-gray-800 pr-6 transition-all duration-200 cursor-pointer"
+                  [ngClass]="{
+                    'justify-center': collapsed,
+                    'pl-4': !collapsed
+                  }">
+            <span class="inline-flex justify-center items-center">
+              <i [class]="item.icon" class="w-5 h-5"></i>
+            </span>
+            <span class="ml-2 text-sm tracking-wide truncate transition-all duration-300"
+                  [ngClass]="collapsed ? 'opacity-0 scale-95 w-0 overflow-hidden' : 'opacity-100 scale-100 w-auto'">
+              {{ item.label }}
+            </span>
+          </button>
+        </li>
+      </ul>
+
+      <!-- Informações do usuário -->
+      <div class="border-t p-4 flex items-center gap-3 text-sm text-gray-700 bg-gray-50"
+           *ngIf="logado">
+        <div class="bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">
+          {{ nome.charAt(0) }}
+        </div>
+        <div class="leading-tight" [ngClass]="collapsed ? 'hidden' : ''">
+          <div class="font-semibold">{{ nome }}</div>
+          <div class="text-xs text-gray-500">{{ perfis[0] }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

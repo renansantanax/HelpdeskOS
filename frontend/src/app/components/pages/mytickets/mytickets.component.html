@@ -1,0 +1,36 @@
+<div class="min-h-screen bg-gray-100 p-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex justify-between items-center mb-5 mt-8">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">Meus chamados</h1>
+      </div>
+      <button routerLink="/ticket" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 text-sm cursor-pointer">
+        + Abrir novo chamado
+      </button>
+    </div>
+
+    <div *ngIf="chamados.length === 0" class="text-center text-gray-500">
+      Você ainda não possui chamados abertos.
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" *ngIf="chamados.length > 0">
+      <div [routerLink]="['/ticket', chamado.id]" *ngFor="let chamado of chamados" class="bg-white rounded-lg shadow-md p-5 flex flex-col gap-2 cursor-pointer">
+        <div class="flex items-center justify-between">
+          <h2 class="text-lg font-semibold text-gray-800 truncate">{{ chamado.titulo }}</h2>
+          <span [ngClass]="{
+              'bg-gray-400 text-gray-200': chamado.status === 'FINALIZADO',
+              'bg-yellow-100 text-yellow-800': chamado.status === 'EM_ANDAMENTO',
+              'bg-green-100 text-green-800': chamado.status === 'ABERTO'
+            }" class="text-xs font-medium px-2 py-1 rounded">
+            {{ chamado.status.replace('_', ' ') }}
+          </span>
+        </div>
+
+        <p class="text-sm text-gray-600 line-clamp-3">{{ chamado.descricao }}</p>
+
+        <div  class="text-sm text-gray-400 mt-auto">Aberto em: {{ chamado.dataAbertura | date:'dd/MM/yyyy HH:mm' }}</div>
+        <div *ngIf="chamado.status === 'FINALIZADO'" class="text-sm text-red-300 mt-auto">Finalizado em: {{ chamado.dataEncerramento | date:'dd/MM/yyyy HH:mm' }}</div>
+      </div>
+    </div>
+  </div>
+</div>

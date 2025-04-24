@@ -1,0 +1,59 @@
+<div class="min-h-screen bg-gray-100 py-10 px-4">
+  <div class="max-w-7xl mx-auto space-y-8">
+    <!-- Título -->
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">Todos os Chamados</h1>
+        <p class="text-sm text-gray-500">Visualização completa de todos os chamados registrados no sistema</p>
+      </div>
+    </div>
+
+    <!-- Tabela de chamados -->
+    <div class="bg-white shadow rounded-xl overflow-auto">
+      <table class="min-w-full divide-y divide-gray-200 text-sm">
+        <thead class="bg-gray-50 text-gray-600">
+          <tr>
+            <th class="px-6 py-3 text-left font-medium">#</th>
+            <th class="px-6 py-3 text-left font-medium">Título</th>
+            <th class="px-6 py-3 text-left font-medium">Descrição</th>
+            <th class="px-6 py-3 text-left font-medium">Tipo</th>
+            <th class="px-6 py-3 text-left font-medium">Status</th>
+            <th class="px-6 py-3 text-left font-medium">Solicitante</th>
+            <th class="px-6 py-3 text-left font-medium">Responsável</th>
+            <th class="px-6 py-3 text-left font-medium">Data de Abertura</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 text-gray-700">
+          <tr *ngFor="let chamado of chamados; let i = index">
+            <td class="px-6 py-4 text-gray-500">{{ i + 1 | idMask }}</td>
+            <td class="px-6 py-4 font-medium">{{ chamado.titulo }}</td>
+            <td class="px-6 py-4">{{ chamado.descricao }}</td>
+            <td class="px-6 py-4">{{ formatarTipo(chamado.tipoChamado) }}</td>
+            <td class="px-6 py-4">
+              <span [ngClass]="{
+                'text-red-600 font-semibold': chamado.status === 'ABERTO',
+                'text-yellow-600 font-semibold': chamado.status === 'EM_ANDAMENTO',
+                'text-green-600 font-semibold': chamado.status === 'FINALIZADO'
+              }">
+                {{ formatarStatus(chamado.status) }}
+              </span>
+            </td>
+            <td class="px-6 py-4">{{ chamado.usuarioSolicitante }}</td>
+            <td class="px-6 py-4">
+              {{ chamado.usuarioResponsavel || 'Não atribuído' }}
+            </td>
+            <td class="px-6 py-4">
+              {{ chamado.dataAbertura | date: 'short' }}
+            </td>
+          </tr>
+
+          <tr *ngIf="chamados.length === 0">
+            <td colspan="8" class="px-6 py-6 text-center text-gray-400">
+              Nenhum chamado encontrado.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

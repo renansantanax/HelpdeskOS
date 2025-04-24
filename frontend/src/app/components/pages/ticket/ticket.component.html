@@ -1,0 +1,83 @@
+<!-- abrir-chamado.component.html -->
+<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10">
+  <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8 space-y-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">Abrir Chamado</h1>
+      <p class="text-sm text-gray-500">Como podemos te ajudar?</p>
+    </div>
+
+
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+      <div>
+        <label for="assunto" class="block text-sm font-medium text-gray-700">
+          Assunto <span class="text-red-500">*</span>
+        </label>
+        <input id="assunto" formControlName="titulo" name="assunto" type="text" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-neutral-300" placeholder="Digite o assunto do chamado" />
+        <div class="min-h-[1.25rem] mb-0 mt-1">
+          <div *ngIf="erros?.titulo" class="flex items-center gap-1 text-red-600 text-sm">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>{{ erros.titulo }}</span>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <div>
+        <label for="descricao" class="block text-sm font-medium text-gray-700">Descrição <span class="text-red-500">*</span></label>
+        <textarea id="descricao" formControlName="descricao" name="descricao" rows="6" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-neutral-300" placeholder="Descreva o problema com detalhes..."></textarea>
+        <div class="min-h-[1.25rem] mb-0">
+          <div *ngIf="erros?.descricao" class="flex items-center gap-1 text-red-600 text-sm">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>{{ erros.descricao }}</span>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div>
+        <label for="tipo" class="block text-sm font-medium text-gray-700">
+          Tipo <span class="text-red-500">*</span>
+        </label>
+        <select id="tipo" formControlName="tipoChamado" class="mt-1 w-full px-4 py-2 border border-gray-300 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm text-gray-700">
+          <option value="" disabled selected>Selecione o tipo de chamado</option>
+          <option value="DUVIDA">Dúvida</option>
+          <option value="ERRO">Erro</option>
+          <option value="SUGESTAO">Sugestão</option>
+        </select>
+        <div class="min-h-[1.25rem] mt-1">
+          <div *ngIf="erros?.titulo" class="flex items-center gap-1 text-red-600 text-sm">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>{{ erros.titulo }}</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div>
+        <label for="anexos" class="block text-sm font-medium text-gray-700">Anexos</label>
+        <div class="mt-2 flex items-center justify-between border-2 border-dashed border-gray-300 rounded-md px-4 py-6 text-center">
+          <span class="text-gray-500 text-sm">Arraste e solte arquivos ou clique no botão abaixo</span>
+          <input type="file" id="anexos" name="anexos" multiple class="hidden" (change)="onFileChange($event)" />
+          <label for="anexos" class="cursor-pointer mt-2 inline-block px-4 py-2 bg-gray-200 text-sm text-gray-700 rounded-md hover:bg-gray-300">Procurar</label>
+        </div>
+        <div class="mt-2 text-sm text-gray-600" *ngIf="arquivosSelecionados.length > 0">
+          <p class="mb-1">Arquivos selecionados:</p>
+          <ul>
+            <li *ngFor="let file of arquivosSelecionados">{{ file.name }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-4">
+        <button (click)="cleanForm()" type="button" class="px-4 py-2 text-sm text-gray-600 hover:underline">Limpar formulário</button>
+        <button type="submit" class="px-6 py-2 text-sm text-white bg-indigo-600 hover:bg-indigo-700 rounded-md">Enviar</button>
+      </div>
+    </form>
+  </div>
+</div>

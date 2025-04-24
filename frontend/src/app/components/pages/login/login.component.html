@@ -1,0 +1,46 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 space-y-6">
+    <div class="text-center">
+      <img src="generic-logo.png" alt="Logo" class="mx-auto h-10 mb-4">
+      <h2 class="text-2xl font-bold text-gray-800">Bem-vindo de volta</h2>
+      <p class="text-sm text-gray-500">Entre com sua conta para continuar</p>
+    </div>
+
+
+    <div class="h-0 text-center transition-all duration-300" [ngClass]="{
+      'text-red-500 opacity-100 visible': mensagem,
+      'opacity-0 invisible': !mensagem
+    }">
+      <strong>{{ mensagem }}</strong>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">E-mail</label>
+        <input type="email" formControlName="email" class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400" placeholder="nome@email.com" />
+
+        <div [ngClass]="{
+                'text-red-500 opacity-100 visible': erros?.email,
+                'opacity-0 invisible': !erros?.email
+              }" class="transition-all text-sm mt-1 h-2 duration-200">
+          <strong>{{ erros?.email }}</strong>
+        </div>
+      </div>
+      <div class="relative">
+        <label class="block text-sm font-medium text-gray-700">Senha</label>
+        <input [type]="mostrarSenha ? 'text' : 'password'" formControlName="senha" class="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400" placeholder="********" />
+        <button type="button" (click)="alternarSenha()" class="absolute right-0 flex items-center px-3 top-8 text-gray-500" tabindex="-1">
+          <fa-icon [icon]="mostrarSenha ? faEyeSlash : faEye"></fa-icon>
+        </button>
+        <div [ngClass]="{
+                'text-red-500 opacity-100 visible': erros?.senha,
+                'opacity-0 invisible': !erros?.senha
+              }" class="transition-all text-sm mt-1 h-3 duration-200">
+          <strong>{{ erros?.senha }}</strong>
+        </div>
+      </div>
+
+      <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-200 cursor-pointer">Entrar</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <app-navbar *ngIf="isLoggedIn"></app-navbar>
+
+  <!-- Conteúdo principal -->
+  <main [@routeAnimations]="prepareRoute(outlet)" class="flex flex-col flex-1 overflow-y-auto">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </main>
+</div>

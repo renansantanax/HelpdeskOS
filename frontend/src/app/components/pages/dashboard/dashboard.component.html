@@ -1,0 +1,71 @@
+<!-- dashboard.component.html -->
+<div class="min-h-screen bg-gray-100 py-8 px-4">
+  <div class="max-w-7xl mx-auto space-y-8">
+    <!-- Título -->
+    <div class="mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+      <p class="text-sm text-gray-500">Visão geral do sistema de chamados</p>
+    </div>
+
+    <!-- Cartões de resumo -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow flex items-center gap-4">
+        <div class="p-3 bg-indigo-100 text-indigo-600 rounded-full">
+          <i class="fas fa-ticket-alt text-xl"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Total de Chamados</p>
+          <h2 class="text-xl font-semibold text-gray-800">{{ totalChamados }}</h2>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow flex items-center gap-4">
+        <div class="p-3 bg-yellow-100 text-yellow-600 rounded-full">
+          <i class="fas fa-spinner text-xl"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Em Andamento</p>
+          <h2 class="text-xl font-semibold text-gray-800">{{ chamadosEmAndamento }}</h2>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow flex items-center gap-4">
+        <div class="p-3 bg-green-100 text-green-600 rounded-full">
+          <i class="fas fa-check-circle text-xl"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Finalizados</p>
+          <h2 class="text-xl font-semibold text-gray-800">{{ chamadosFinalizados }}</h2>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow flex items-center gap-4">
+        <div class="p-3 bg-red-100 text-red-600 rounded-full">
+          <i class="fas fa-exclamation-circle text-xl"></i>
+        </div>
+        <div>
+          <p class="text-sm text-gray-500">Abertos</p>
+          <h2 class="text-xl font-semibold text-gray-800">{{ chamadosAbertos }}</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Espaço para gráficos -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">Chamados por Status</h3>
+        <canvas baseChart [type]="pieChartType" [data]="pieChartData" [options]="pieChartOptions" class="w-full max-w-md mx-auto"></canvas>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">Chamados Recentes</h3>
+        <ul *ngIf="chamadosRecentes.length > 0" class="divide-y divide-gray-200 text-sm text-gray-600">
+          <li *ngFor="let chamado of chamadosRecentes" class="py-2">
+            <strong>{{ chamado.titulo }}</strong> - {{ chamado.status.replace('_', ' ') }}
+          </li>
+        </ul>
+        <p *ngIf="chamadosRecentes.length === 0" class="text-sm text-gray-400">Nenhum chamado recente encontrado.</p>
+      </div>
+    </div>
+  </div>
+</div>
