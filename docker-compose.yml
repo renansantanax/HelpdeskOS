@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_osservice
+    restart: always
+    environment:
+      POSTGRES_USER: adminOs
+      POSTGRES_PASSWORD: adminPass
+      POSTGRES_DB: osservice_db
+    ports:
+      - "5438:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_osservice
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog_osservice
+    restart: always
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: osservice_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - rabbitmq
+      - mailhog
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/osservice_db
+      SPRING_DATASOURCE_USERNAME: adminOs
+      SPRING_DATASOURCE_PASSWORD: adminPass
+      SPRING_MAIL_HOST: mailhog
+      SPRING_MAIL_PORT: 1025
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: osservice_frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
