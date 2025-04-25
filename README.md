@@ -71,11 +71,11 @@ O **HelpdeskOS** é uma plataforma para gerenciamento de chamados (tickets) que 
 ## 🎯 Padrões e Princípios
 
 ### SOLID
-- **S**ingle Responsibility  
-- **O**pen/Closed  
-- **L**iskov Substitution  
-- **I**nterface Segregation  
-- **D**ependency Inversion  
+- **S**ingle Responsibility: cada classe/função tem uma única responsabilidade.
+- **O**pen/Closed: extensível sem modificação dos módulos existentes (ex: novos DTOs, handlers).
+- **L**iskov Substitution: uso de interfaces e herança
+- **I**nterface Segregation: pequenos contratos para repositórios e storage.
+- **D**ependency Inversion: dependência de abstrações (serviços → repositórios, controllers → serviços).
 
 ### Design Patterns
 - **Repository** (Spring Data)  
@@ -99,10 +99,10 @@ O **HelpdeskOS** é uma plataforma para gerenciamento de chamados (tickets) que 
 docker-compose up --build -d
 ```
 
-- **Back-end: http://localhost:8083
-- **Front-end: http://localhost:4200
-- **Swagger UI: http://localhost:8083/swagger-ui/index.html
-- **Mailhog: http://localhost:8025
+- Back-end: http://localhost:8083
+- Front-end: http://localhost:4200
+- Swagger UI: http://localhost:8083/swagger-ui/index.html
+- Mailhog: http://localhost:8025
 
 ### 📄 Licença
 Este projeto está licenciado sob a MIT License.
